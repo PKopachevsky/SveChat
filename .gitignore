@@ -1,3 +1,4 @@
-./JavaHttpServer/core/build/
-./JavaHttpServer/.idea/
+JavaHttpServer/core/build/
+JavaHttpServer/.idea/
+JavaHttpServer/.gradle/
 *.iml
