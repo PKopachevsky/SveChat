@@ -11,7 +11,8 @@ public class SendTextHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange ex) throws IOException {
         InputStream is = ex.getRequestBody();
-        is.transferTo(System.out);
+        System.out.println(new String(is.readAllBytes()));
+
         String response = "This is the response";
         byte[] bytes = response.getBytes();
         ex.sendResponseHeaders(200, bytes.length);

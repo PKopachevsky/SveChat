@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script>
+      function sendMessage() {
+        let message = document.getElementById('message_fld').value;
+        if (message) {
+          alert(message)
+        }
+      }
+    </script>
+</head>
+<body>
+<ul>
+    <li>[12:23] Sveta: kekklekekeke</li>
+    <li>[12:34] Pasha: kekklekekeke</li>
+    <li>[12:48] Sveta: kekklekekeke</li>
+    <li>[12:51] Pasha: kekklekekeke</li>
+</ul>
+<input type="text" id="message_fld">
+<button id="send_btn" onclick="sendMessage()">Send</button>
+</body>
+</html>
