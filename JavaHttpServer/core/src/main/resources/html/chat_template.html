@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script>
+        function sendMessage() {
+            let message = {
+                text: document.getElementById('message_fld').value,
+                author: "Sveta"
+            };
+            fetch("http://localhost:8888/chat/send/json", {
+                    method: 'POST',
+                    body: JSON.stringify(message)
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+<ul>
+   %%CHAT_LIST%%
+</ul>
+<input type="text" id="message_fld">
+<button id="send_btn" onclick="sendMessage()">Send</button>
+</body>
+</html>
