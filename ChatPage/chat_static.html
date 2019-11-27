@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <style>
+        li.mine {
+            background: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div class="mine">SveChat</div>
+<ul id="messages_list">
+    <li class="mine">[Sveta]: Привет</li>
+    <li>[Pasha]: Привет!</li>
+    <li class="mine">[Sveta]: Как дела?</li>
+    <li>[Pasha]: Ничотак</li>
+</ul>
+<input type="text" id="message_fld">
+<button id="send_btn" onclick="sendMessage()">Send</button>
+</body>
+</html>
