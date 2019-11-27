@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script>
+      function sendMessage() {
+        let text = document.getElementById('message_fld').value;
+        if (text) {
+          message = { text, author: "Sveta" };
+          fetch("http://localhost:8888/chat/send/json", {
+              method: 'POST',
+              body: JSON.stringify(message)
+            }
+          )
+            .then(() => {
+              document.location.reload()
+            })
+            .catch(err => {
+              console.log(err)
+            });
+        }
+      }
+
+      window.onload = function () {
+        fetch("http://localhost:8888/chat/messages")
+          .then(response => response.json())
+          .then(json => {
+            console.log("Messages: " + json)
+            let list = document.getElementById("messages_list");
+            json.forEach(m => {
+              var li = document.createElement("li");
+              li.innerHTML = `[${ m.author }]: ${ m.text }`
+              list.appendChild(li)
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          });
+      };
+    </script>
+</head>
+<body>
+<ul id="messages_list">
+</ul>
+<input type="text" id="message_fld">
+<button id="send_btn" onclick="sendMessage()">Send</button>
+</body>
+</html>

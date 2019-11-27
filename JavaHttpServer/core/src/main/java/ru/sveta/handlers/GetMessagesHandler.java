@@ -6,18 +6,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.sveta.beans.ChatMessage;
 import ru.sveta.storage.ChatStorage;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
-public class SendJsonHandler implements HttpHandler {
+public class GetMessagesHandler implements HttpHandler {
     private final ChatStorage chatStorage;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendJsonHandler(ChatStorage chatStorage) {
+    public GetMessagesHandler(ChatStorage chatStorage) {
         this.chatStorage = chatStorage;
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
@@ -25,15 +23,12 @@ public class SendJsonHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange ex) throws IOException {
-        InputStream is = ex.getRequestBody();
-        ChatMessage message = mapper.readValue(is, ChatMessage.class);
-        System.out.println(String.format("Message from %s: %s", message.getAuthor(), message.getText()));
-        chatStorage.addMessage(message);
-        String response = "OK";
+        System.out.println("Get messages request");
+        String response = mapper.writeValueAsString(chatStorage.getMessages());
         byte[] bytes = response.getBytes();
         Headers headers = ex.getResponseHeaders();
         headers.add("Access-Control-Allow-Origin","*");
-        ex.sendResponseHeaders(200, bytes.length);
+        ex.sendResponseHeaders(200,bytes.length);
         OutputStream os = ex.getResponseBody();
         os.write(bytes);
         os.close();
