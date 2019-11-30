@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookShelf</title>
+    <script>
+        let firstBook =  {
+            title:"Почему я люблю Канта",
+            sequel: null
+        };
+        let lastBook =  firstBook;
+
+        function update(){
+            let list = document.getElementById("bookshelf");
+            list.innerHTML = "";
+            let book = firstBook;
+            let i = 0;
+            while (book){
+                let li = createListItem(i,book);
+                list.appendChild(li);
+                book = book.sequel;
+                i++;
+            }
+        }
+
+        function createListItem(i, book) {
+            let li = document.createElement("li");
+            li.innerHTML = `Том ${i}: ${ book.title }`;
+            return li
+        }
+
+        function addBook(){
+            let title = document.getElementById("title_fld").value;
+            createSequel(lastBook,title);
+            update();
+        }
+
+        function createSequel(book, sequelTitle) {
+            let newSequel =  {
+                title: sequelTitle,
+                sequel: null
+            };
+
+            if(book.sequel){
+                newSequel.sequel = book.sequel;
+            }
+            book.sequel = newSequel;
+            if(lastBook === book){
+                lastBook = newSequel;
+            }
+        }
+
+        window.onload = () => update()
+    </script>
+</head>
+<body>
+
+<ul id="bookshelf"></ul>
+<input type="text" id="title_fld">
+<button id="add_btn" onclick="addBook()">Add</button>
+
+</body>
+</html>

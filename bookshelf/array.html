@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookShelf</title>
+    <script>
+        let books = [
+            { title: "Почему я люлю Канта" },
+            { title: "Почему я Канта - мой кумир" },
+            { title: "Кант и моя гениальность" }
+        ];
+
+        function update(){
+            let list = document.getElementById("bookshelf");
+            list.innerHTML = "";
+            for(let i = 0; i < books.length; i++){
+                let li = createListItem(i,books[i]);
+                list.appendChild(li)
+            }
+        }
+
+        function createListItem(i, book) {
+            let li = document.createElement("li");
+            li.innerHTML = `Том ${i}: ${ book.title }`;
+            return li
+        }
+
+        function addBook(){
+            let newTitle = document.getElementById("title_fld").value;
+            books.push({ title: newTitle });
+            update();
+        }
+
+        window.onload = () => update()
+    </script>
+</head>
+<body>
+
+<ul id="bookshelf">
+
+</ul>
+<input type="text" id="title_fld">
+<button id="add_btn" onclick="addBook()">Add</button>
+
+</body>
+</html>

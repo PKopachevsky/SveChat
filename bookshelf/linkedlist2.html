@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookShelf</title>
+    <style>
+    button {
+        margin-left: 10px;
+    }
+    </style>
+    <script>
+        let firstBook =  {
+            title:"Почему я люлю Канта",
+            sequel: null,
+            prequel: null
+        };
+        let lastBook =  firstBook;
+
+        function update(){
+            let list = document.getElementById("bookshelf");
+            list.innerHTML = "";
+            let book = firstBook;
+            let i = 0;
+            while (book){
+                let li = createListItem(i,book);
+                list.appendChild(li);
+                book = book.sequel;
+                i++;
+            }
+        }
+
+        function createListItem(i, book) {
+            let li = document.createElement("li");
+            let title = book.title;
+            li.innerHTML = `Том ${i}: ${ title }`;
+            let seqButton = sequelBtn(book);
+            let preButton = prequelBtn(book);
+            li.append(preButton);
+            li.append(seqButton);
+            return li
+        }
+        function createPrequel(book) {
+            let prequelTitle = document.getElementById("title_fld").value;
+            let newPrequel =  {
+                title:prequelTitle,
+                sequel: null,
+                prequel: null
+            };
+            newPrequel.sequel = book
+            if (book.prequel) {
+                newPrequel.prequel = book.prequel;
+                newPrequel.prequel.sequel = newPrequel
+            }
+            book.prequel = newPrequel;
+            if(firstBook === book){
+                firstBook = newPrequel;
+            }
+            update();
+        }
+
+        function createSequel(book) {
+            let sequelTitle = document.getElementById("title_fld").value;
+            let newSequel =  {
+                title:sequelTitle,
+                sequel: null,
+                prequel: null
+            };
+
+            if(book.sequel){
+                newSequel.sequel = book.sequel;
+                newSequel.sequel.prequel = newSequel;
+            }
+            book.sequel = newSequel;
+            if(lastBook === book){
+                lastBook = newSequel;
+            }
+            update();
+        }
+
+        function sequelBtn(book){
+            let button = document.createElement("button");
+            button.innerHTML = "Sequel";
+            button.addEventListener ("click", ()=> createSequel(book));
+            return button;
+        }
+
+        function prequelBtn(book){
+            let button = document.createElement("button");
+            button.innerHTML = "Prequel";
+            button.addEventListener ("click", ()=> createPrequel(book));
+            return button;
+        }
+        window.onload = () => update()
+    </script>
+</head>
+<body>
+
+<ul id="bookshelf"></ul>
+<input type="text" id="title_fld">
+
+</body>
+</html>
