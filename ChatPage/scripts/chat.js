@@ -7,7 +7,7 @@ async function onSendClick() {
 
 async function reload() {
     let messages = await getMessages();
-    console.log("Messages: " + messages);
+    console.log("Messages: " + JSON.stringify(messages));
     let list = document.getElementById("messages_list");
     list.innerText = "";
     messages.forEach(m => list.appendChild(createListItem(m)));
@@ -15,8 +15,18 @@ async function reload() {
 
 function createListItem(m){
     let li = document.createElement("li");
-    li.innerHTML = `[${m.author}]: ${m.text}`
+    let author = m.author;
+    let text = m.text;
+    let time = convertToTime(m.time);
+    li.innerHTML = `[${time}] ${author}: ${text}`;
     return li;
 }
 
-window.onload = () => reload()
+function convertToTime(unixTime){
+    if(!unixTime){
+        return "--:--:--"
+    }
+    return moment(unixTime).format("HH:mm:ss")
+}
+
+window.onload = () => reload();

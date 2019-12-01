@@ -28,6 +28,7 @@ public class SendJsonHandler implements HttpHandler {
         InputStream is = ex.getRequestBody();
         ChatMessage message = mapper.readValue(is, ChatMessage.class);
         System.out.println(String.format("Message from %s: %s", message.getAuthor(), message.getText()));
+        message.setTime(System.currentTimeMillis());
         chatStorage.addMessage(message);
         String response = "OK";
         byte[] bytes = response.getBytes();
