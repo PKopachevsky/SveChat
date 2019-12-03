@@ -18,7 +18,10 @@ function createListItem(m){
     let author = m.author;
     let text = m.text;
     let time = convertToTime(m.time);
-    li.innerHTML = `[${time}] ${author}: ${text}`;
+    li.innerHTML =
+        `<span class="time">[${time}]</span>` +
+        `<b> ${author}</b>: ` +
+        `${text}`;
     return li;
 }
 
@@ -29,4 +32,14 @@ function convertToTime(unixTime){
     return moment(unixTime).format("HH:mm:ss")
 }
 
-window.onload = () => reload();
+window.onload = async () => {
+    window.chat = {};
+    let user = new URL(window.location.href).searchParams.get("user");
+    if(user) {
+        localStorage.setItem("user", user);
+    }else {
+        user = localStorage.getItem("user")
+    }
+    window.chat.user = user ? user : "anonymous";
+    await reload();
+};

@@ -7,15 +7,21 @@
         li.mine {
             background: lightgreen;
         }
+        span.time {
+            color: gray;
+
+        }
     </style>
 </head>
 <body>
 <div class="mine">SveChat</div>
 <ul id="messages_list">
-    <li class="mine">[Sveta]: Привет</li>
-    <li>[Pasha]: Привет!</li>
-    <li class="mine">[Sveta]: Как дела?</li>
-    <li>[Pasha]: Ничотак</li>
+    <li class="mine">[21:26:43] Sveta: Привет</li>
+    <li>[21:26:43] Pasha: Привет!</li>
+    <li class="mine">[21:26:43] Sveta: Как дела?</li>
+
+    <li><span class="time">[21:26:43]</span> Pasha: Ничотак</li>
+
 </ul>
 <input type="text" id="message_fld">
 <button id="send_btn" onclick="sendMessage()">Send</button>

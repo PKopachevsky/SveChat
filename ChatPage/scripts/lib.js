@@ -1,6 +1,9 @@
-function sendMessage(text) {
-    if (text) {
-        let message = { text, author: "Sveta" };
+function sendMessage(messageText) {
+    if (messageText) {
+        let message = {
+            text: messageText,
+            author: chat.user
+        };
         return fetch("http://localhost:8888/chat/send/json", {
                 method: 'POST',
                 body: JSON.stringify(message)
