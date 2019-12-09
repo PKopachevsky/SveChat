@@ -23,3 +23,15 @@ function getMessages(text) {
             console.log(err)
         });
 }
+
+window.onload = async () => {
+    window.chat = {};
+    let user = new URL(window.location.href).searchParams.get("user");
+    if(user) {
+        localStorage.setItem("user", user);
+    } else {
+        user = localStorage.getItem("user")
+    }
+    window.chat.user = user ? user : "anonymous";
+    await reload();
+};
