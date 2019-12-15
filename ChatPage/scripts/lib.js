@@ -24,6 +24,7 @@ function getMessages(text) {
         });
 }
 
+
 window.onload = async () => {
     window.chat = {};
     let user = new URL(window.location.href).searchParams.get("user");

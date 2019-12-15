@@ -1,45 +1,76 @@
 async function onSendClick() {
-    let input = document.getElementById('message_fld');
-    await sendMessage(input.value);
-    input.value = "";
-    await reload()
+  let input = document.getElementById('message_fld');
+  await sendMessage(input.value);
+  input.value = "";
+  await reload()
 }
 
 async function reload() {
-    let messages = await getMessages();
-    console.log("Messages: " + JSON.stringify(messages));
-    let list = document.getElementById("messages_list");
-    list.innerText = "";
-    messages.forEach(m => list.appendChild(createListItem(m)));
+  let messages = await getMessages();
+  console.log("Messages: " + JSON.stringify(messages));
+  let list = document.getElementById("messages_list");
+  list.innerText = "";
+  messages.forEach(m => {
+    let newLi = createListItem(m);
+    list.appendChild(newLi)
+  });
 }
 
-function createListItem({ author, text, time }){
-    let timeStr = convertToTime(time);
+function createListItem({ author, text, time }) {
+  let timeStr = convertToTime(time);
 
-    let li = document.createElement("li");
+  let li = document.createElement("li");
 
-    let me = isMe(author);
-    if(me) {
-        li.classList.add('my');
-    }
-    else {
-        li.classList.add('theirs');
-    }
+  let me = isMe(author);
+  if (me) {
+    li.classList.add('my');
+  } else {
+    li.classList.add('theirs');
+  }
 
-    li.innerHTML =
-        `<span class="time">[${timeStr}]</span>` +
-        `<b> ${author}</b>: ` +
-        `${text}`;
-    return li;
+  li.innerHTML =
+    `<span class="time">[${ timeStr }]</span>` +
+    `<b> ${ author }:</b> ` +
+    `${ text } `;
+
+  if (!me) {
+    let replyBtn = document.createElement("a");
+    replyBtn.classList.add('control');
+    replyBtn.innerText = '↲';
+    replyBtn.addEventListener(
+      'click', function reply(author, text) {
+        let input = document.getElementById('message_fld');
+        input.value = '"' + text + '" ';
+      });
+    li.append(replyBtn);
+  }
+  return li;
 }
 
-function isMe(author){
-    return window.chat.user === author;
+
+/*let replyBtn = createElem({
+  tag: 'a',
+  clazz: 'control',
+  content: '↲',
+  onClick: () => reply(author, text)
+});*/
+
+/*function createElem({ tag, clazz, content, onClick }) {
+  let elem = document.createElement(tag);
+  elem.classList.add(clazz);
+  elem.innerText = content;
+  elem.addEventListener('click', onClick);
+  return elem;
+}*/
+
+function isMe(author) {
+  return window.chat.user === author;
 }
 
-function convertToTime(unixTime){
-    if(!unixTime){
-        return "--:--:--"
-    }
-    return moment(unixTime).format("HH:mm:ss")
+function convertToTime(unixTime) {
+  if (!unixTime) {
+    return "--:--:--"
+  }
+  let time = moment(unixTime);
+  return time.format("HH:mm:ss")
 }

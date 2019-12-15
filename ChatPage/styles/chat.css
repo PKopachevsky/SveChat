@@ -3,20 +3,20 @@ span.time {
 }
 
 li.my {
-  background-color: aquamarine;
-    border: 1px darkorchid solid;
-
+    background-color: lightgreen;
 }
 
 #messages_list{
- margin: 15px;
+    margin: 15px;
 }
 
 li.theirs {
-   background-color: cornflowerblue;
-    border: 1px midnightblue solid;
+   background-color: lightblue;
 }
 
 li.theirs span.time {
-    color: wheat;
+}
+
+a.control {
+    cursor: pointer;
 }
