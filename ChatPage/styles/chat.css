@@ -2,6 +2,11 @@ span.time {
     color: gray;
 }
 
+li {
+    padding: 2px;
+    margin: 2px;
+}
+
 li.my {
     background-color: lightgreen;
 }

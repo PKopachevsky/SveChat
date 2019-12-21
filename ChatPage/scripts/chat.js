@@ -2,6 +2,8 @@ async function onSendClick() {
   let input = document.getElementById('message_fld');
   await sendMessage(input.value);
   input.value = "";
+  let btn = document.getElementById('send_btn');
+  btn.disabled = true;
   await reload()
 }
 
@@ -38,9 +40,11 @@ function createListItem({ author, text, time }) {
     replyBtn.classList.add('control');
     replyBtn.innerText = '↲';
     replyBtn.addEventListener(
-      'click', function reply(author, text) {
+      'click', function reply() {
         let input = document.getElementById('message_fld');
         input.value = '"' + text + '" ';
+        let btn = document.getElementById('send_btn');
+        btn.disabled = false;
       });
     li.append(replyBtn);
   }
@@ -73,4 +77,16 @@ function convertToTime(unixTime) {
   }
   let time = moment(unixTime);
   return time.format("HH:mm:ss")
+}
+
+function onMessageInput() {
+  let btn = document.getElementById('send_btn');
+  let input = document.getElementById('message_fld');
+
+  let length = input.value.length;
+  if (length > 0) {
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
 }
