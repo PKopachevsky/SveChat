@@ -25,3 +25,9 @@ li.theirs span.time {
 a.control {
     cursor: pointer;
 }
+
+#remove_btn {
+    position: relative;
+    left: -18px;
+    cursor: pointer;
+}

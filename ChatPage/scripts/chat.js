@@ -1,10 +1,12 @@
 async function onSendClick() {
-  let input = document.getElementById('message_fld');
-  await sendMessage(input.value);
-  input.value = "";
-  let btn = document.getElementById('send_btn');
-  btn.disabled = true;
-  await reload()
+  await sendMessage(chatInput.value);
+  clearInput();
+  await reload();
+}
+
+function clearInput(){
+  chatInput.value = "";
+  chatBtn.disabled = true;
 }
 
 async function reload() {
@@ -41,10 +43,8 @@ function createListItem({ author, text, time }) {
     replyBtn.innerText = '↲';
     replyBtn.addEventListener(
       'click', function reply() {
-        let input = document.getElementById('message_fld');
-        input.value = '"' + text + '" ';
-        let btn = document.getElementById('send_btn');
-        btn.disabled = false;
+        chatInput.value = '"' + text + '" ';
+        chatBtn.disabled = false;
       });
     li.append(replyBtn);
   }
@@ -80,13 +80,10 @@ function convertToTime(unixTime) {
 }
 
 function onMessageInput() {
-  let btn = document.getElementById('send_btn');
-  let input = document.getElementById('message_fld');
-
-  let length = input.value.length;
+  let length = chatInput.value.length;
   if (length > 0) {
-    btn.disabled = false;
+    chatBtn.disabled = false;
   } else {
-    btn.disabled = true;
+    chatBtn.disabled = true;
   }
 }

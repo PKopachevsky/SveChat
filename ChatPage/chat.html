@@ -11,7 +11,10 @@
 <body>
 <ul id="messages_list">
 </ul>
-<input type="text" id="message_fld" onkeyup="onMessageInput()">
-<button id="send_btn" onclick="onSendClick()" disabled>Send ↲</button>
+<p>
+    <input type="text" id="message_fld" onkeyup="onMessageInput()">
+    <a id="remove_btn" onclick="clearInput()">×</a>
+    <button id="send_btn" onclick="onSendClick()" disabled>Send ↲</button>
+</p>
 </body>
 </html>
