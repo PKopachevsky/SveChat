@@ -1,7 +1,8 @@
-function sendMessage(messageText) {
-  if (messageText) {
+function sendMessage({ text, quote }) {
+  if (text || quote) {
     let message = {
-      text: messageText,
+      text: text || "",
+      quote: quote,
       author: chat.user
     };
     return fetch("http://localhost:8888/chat/send/json", {

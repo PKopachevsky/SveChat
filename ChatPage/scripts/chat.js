@@ -1,10 +1,30 @@
+function parse(str) {
+  if (str.startsWith('"')) {
+    let text = str.substr(1);
+    let index = text.indexOf('"');
+    if (index !== -1) {
+      let quote = text.substr(0, index);
+      text = text.substr(index + 1);
+      return {
+        "quote": quote,
+        "text": text
+      }
+    }
+  }
+
+  return { text: str }
+}
+
+
 async function onSendClick() {
-  await sendMessage(chatInput.value);
+  let str = chatInput.value;
+  let message = parse(str);
+  await sendMessage(message);
   clearInput();
   await reload();
 }
 
-function clearInput(){
+function clearInput() {
   chatInput.value = "";
   chatBtn.disabled = true;
 }
