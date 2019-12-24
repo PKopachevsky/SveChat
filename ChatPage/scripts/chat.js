@@ -40,7 +40,7 @@ async function reload() {
   });
 }
 
-function createListItem({ author, text, time }) {
+function createListItem({ author, text, quote, time }) {
   let timeStr = convertToTime(time);
 
   let li = document.createElement("li");
@@ -52,10 +52,12 @@ function createListItem({ author, text, time }) {
     li.classList.add('theirs');
   }
 
-  li.innerHTML =
-    `<span class="time">[${ timeStr }]</span>` +
-    `<b> ${ author }:</b> ` +
-    `${ text } `;
+  li.innerHTML = `<span class="time">[${ timeStr }]</span>`;
+  li.innerHTML += `<b> ${ author }:</b> `;
+  if (quote) {
+    li.innerHTML += `<br><i class="quote">${ quote } </i>`;
+  }
+  li.innerHTML += `<br>${ text } `;
 
   if (!me) {
     let replyBtn = document.createElement("a");
