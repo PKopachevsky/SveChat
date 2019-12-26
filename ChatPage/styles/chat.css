@@ -8,7 +8,11 @@ li {
 }
 
 li.my {
-    background-color: lightgreen;
+    background-color: #90ee90;
+}
+
+li.my:hover {
+    background-color: #7fce7f;
 }
 
 #messages_list{
@@ -16,7 +20,11 @@ li.my {
 }
 
 li.theirs {
-   background-color: lightblue;
+   background-color: #99efff;
+}
+
+li.theirs:hover {
+    background-color: #83ccda;
 }
 
 li.theirs span.time {
@@ -24,12 +32,22 @@ li.theirs span.time {
 
 a.control {
     cursor: pointer;
+    visibility: hidden;
+}
+
+li:hover a.control {
+    visibility: visible;
 }
 
 #remove_btn {
     position: relative;
-    left: -18px;
+    left: -19px;
+    top: 2px;
     cursor: pointer;
+}
+
+#message_fld:focus{
+    border: green 1px solid;
 }
 
 .quote {

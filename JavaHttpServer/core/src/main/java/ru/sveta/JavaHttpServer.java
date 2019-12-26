@@ -15,7 +15,6 @@ public class JavaHttpServer {
         ChatStorage chatStorage = new ChatStorage();
         server.createContext("/chat/send/json", new SendJsonHandler(chatStorage));
         server.createContext("/chat/messages", new GetMessagesHandler(chatStorage));
-        server.createContext("/chat", new GetHistoryHandler(chatStorage));
         server.setExecutor(null); // creates a default executor
         server.start();
     }

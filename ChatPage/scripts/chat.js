@@ -46,11 +46,6 @@ function createListItem({ author, text, quote, time }) {
   let li = document.createElement("li");
 
   let me = isMe(author);
-  if (me) {
-    li.classList.add('my');
-  } else {
-    li.classList.add('theirs');
-  }
 
   li.innerHTML = `<span class="time">[${ timeStr }]</span>`;
   li.innerHTML += `<b> ${ author }:</b> `;
@@ -59,7 +54,10 @@ function createListItem({ author, text, quote, time }) {
   }
   li.innerHTML += `<br>${ text } `;
 
-  if (!me) {
+  if (me) {
+    li.classList.add('my');
+  } else {
+    li.classList.add('theirs');
     let replyBtn = document.createElement("a");
     replyBtn.classList.add('control');
     replyBtn.innerText = '↲';
