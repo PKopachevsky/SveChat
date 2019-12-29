@@ -25,11 +25,14 @@ function getMessages(text) {
     });
 }
 
+$( document ).ready(function() {
+  window.chatInput = $('#message_fld');
+  window.chatBtn = $('#send_btn');
+  window.messagesList = $('#messages_list');
+});
+
 window.onload = async () => {
   window.chat = {};
-
-  window.chatInput = document.getElementById('message_fld');
-  window.chatBtn = document.getElementById('send_btn');
 
   let user = new URL(window.location.href).searchParams.get("user");
   if (user) {

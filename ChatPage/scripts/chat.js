@@ -17,7 +17,7 @@ function parse(str) {
 
 
 async function onSendClick() {
-  let str = chatInput.value;
+  let str = chatInput.val();
   let message = parse(str);
   await sendMessage(message);
   clearInput();
@@ -25,8 +25,8 @@ async function onSendClick() {
 }
 
 function clearInput() {
-  chatInput.value = "";
-  chatBtn.disabled = true;
+  chatInput.val("");
+  chatBtn.prop("disabled", true);
 }
 
 async function reload() {
@@ -34,39 +34,43 @@ async function reload() {
   console.log("Messages: " + JSON.stringify(messages));
   let list = document.getElementById("messages_list");
   list.innerText = "";
-  messages.forEach(m => {
-    let newLi = createListItem(m);
-    list.appendChild(newLi)
-  });
+  messages.forEach(m => createListItem(m));
 }
 
 function createListItem({ author, text, quote, time }) {
   let timeStr = convertToTime(time);
 
-  let li = document.createElement("li");
+  let li = $("<li>").appendTo(messagesList);
 
-  let me = isMe(author);
+  $("<div>")
+    .text(`[${ timeStr }]`)
+    .addClass("time")
+    .append($("<b>").text(author))
+    .appendTo(li);
 
-  li.innerHTML = `<span class="time">[${ timeStr }]</span>`;
-  li.innerHTML += `<b> ${ author }:</b> `;
   if (quote) {
-    li.innerHTML += `<br><i class="quote">${ quote } </i>`;
+    $("<div>")
+      .text(quote)
+      .addClass("quote")
+      .appendTo(li);
   }
-  li.innerHTML += `<br>${ text } `;
+  let textDiv = $("<div>")
+    .text(text)
+    .appendTo(li);
 
-  if (me) {
-    li.classList.add('my');
+  if (isMe(author)) {
+    li.addClass('my');
   } else {
-    li.classList.add('theirs');
-    let replyBtn = document.createElement("a");
-    replyBtn.classList.add('control');
-    replyBtn.innerText = '↲';
-    replyBtn.addEventListener(
-      'click', function reply() {
-        chatInput.value = '"' + text + '" ';
-        chatBtn.disabled = false;
-      });
-    li.append(replyBtn);
+    li.addClass('theirs');
+
+    $("<a>")
+      .addClass("control")
+      .text("↲")
+      .click(function reply() {
+        chatInput.val('"' + text + '" ');
+        chatBtn.prop("disabled", true);
+      })
+      .appendTo(textDiv)
   }
   return li;
 }
@@ -100,10 +104,6 @@ function convertToTime(unixTime) {
 }
 
 function onMessageInput() {
-  let length = chatInput.value.length;
-  if (length > 0) {
-    chatBtn.disabled = false;
-  } else {
-    chatBtn.disabled = true;
-  }
+  let length = chatInput.val().length;
+  chatBtn.prop("disabled", length === 0);
 }
